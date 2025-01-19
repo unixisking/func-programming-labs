@@ -104,13 +104,12 @@ class Complex(val real: Double, val imag: Double):
     Complex(real, imag*(-1))
   }
 
-  def >(that: Complex) = {
-    real > that.real && imag > that.imag
-  }
+  def >(that: Complex) =
+    (real > that.real) || (real == that.real && imag > that.imag)
 
-  def <(that: Complex) = {
-    real < that.real && imag > that.imag
-  }
+  def <(that: Complex) =
+    (real < that.real) || (real == that.real && imag < that.imag)
+
 end Complex
 
 extension (x: Int)
