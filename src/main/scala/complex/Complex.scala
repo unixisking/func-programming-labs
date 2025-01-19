@@ -19,9 +19,18 @@ class Complex(val real: Double, val imag: Double):
       case (x, -1) if x > 0 => s"${real} - i"
       case (x, y)  if x > 0 && y > 0 => s"${real} + ${imag}i"
       case (x, y) if x > 0 && y < 0 => s"${real} - ${imag*(-1)}i"
+      case (x, y) if x < 0 && y < 0 => s"${real} - ${imag*(-1)}i"
       case _ => ""
     }
   }
+
+  override def equals(obj: Any): Boolean = obj match
+    case that: Complex => that.real == this.real && that.imag == this.imag
+    case _ => false
+
+
+  override def hashCode(): Int = (real, imag).hashCode()
+    
   /**
    * Le module du nombre complexe
    * rappel : module(a + bi) = sqrt(a * a + b * b)
@@ -64,13 +73,16 @@ class Complex(val real: Double, val imag: Double):
    * Le complexe obtenu en multipliant "this" et "that"
    */
   def *(that: Complex) = {
-    Complex(real * that.real, imag * that.imag)
+    Complex(
+      (that.real * real) - (that.imag * imag),
+      (real * that.imag) + (that.real * imag)
+    )
   }
   /**
    * Le complexe obtenu en multipliant "this" et "that"
    */
   def *(that: Double) = {
-    Complex(real*that, imag)
+    Complex(real*that, imag*that)
   }
   /**
    * Le complexe obtenu en divisant "this" par "that"
@@ -91,4 +103,15 @@ class Complex(val real: Double, val imag: Double):
   def conj = {
     Complex(real, imag*(-1))
   }
+
+  def >(that: Complex) = {
+    real > that.real && imag > that.imag
+  }
+
+  def <(that: Complex) = {
+    real < that.real && imag > that.imag
+  }
 end Complex
+
+extension (x: Int)
+  def +(that: Complex) = Complex(that.real + x, that.imag)

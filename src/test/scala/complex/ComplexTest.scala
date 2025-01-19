@@ -44,37 +44,37 @@ class ComplexTest extends AnyFunSuite {
       assert(c1.arg === 1.1071487177940904)
     }
   }
-  // test("Conjugué d'un complexe") {
-  //   new TestComplexes {
-  //     assert(c1.conj === Complex(1, -2))
-  //   }
-  // }
+  test("Conjugué d'un complexe") {
+    new TestComplexes {
+      assert(c1.conj === Complex(1, -2))
+    }
+  }
   // test("Initialisation d'un complexe par coordonnées polaires") {
   //   new TestComplexes {
   //     assert(PolarComplex(c1.mod, c1.arg) === Complex(1.0000000000000002, 2.0))
   //   }
   // }
-  // test("Comparaisons de complexes") {
-  //   new TestComplexes {
-  //     assert(c1 > c2)
-  //     assert(c3 < c2)
-  //   }
-  // }
-  // test("Addition d'un complexe et d'un entier") {
-  //   new TestComplexes {
-  //     assert(c1 + 1 === Complex(2, 2))
-  //   }
-  // }
+  test("Comparaisons de complexes") {
+    new TestComplexes {
+      assert(c1 > c2)
+      assert(c3 < c2)
+    }
+  }
+  test("Addition d'un complexe et d'un entier") {
+    new TestComplexes {
+      assert(c1 + 1 === Complex(2, 2))
+    }
+  }
   test("Produit d'un complexe et d'un flottant") {
     new TestComplexes {
       assert(c1 * -2.0 === Complex(-2, -4))
     }
   }
-  // test("Addition d'un entier et d'un complexe") {
-  //   new TestComplexes {
-  //     assert(1 + c1 === Complex(2, 2))
-  //   }
-  // }
+  test("Addition d'un entier et d'un complexe") {
+    new TestComplexes {
+      assert(1 + c1 === Complex(2, 2))
+    }
+  }
   test("Produit de deux complexes") {
     new TestComplexes {
       assert(c1 * c2 === Complex(-12, 1))
