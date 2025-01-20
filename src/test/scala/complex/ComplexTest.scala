@@ -49,11 +49,11 @@ class ComplexTest extends AnyFunSuite {
       assert(c1.conj === Complex(1, -2))
     }
   }
-  // test("Initialisation d'un complexe par coordonnées polaires") {
-  //   new TestComplexes {
-  //     assert(PolarComplex(c1.mod, c1.arg) === Complex(1.0000000000000002, 2.0))
-  //   }
-  // }
+  test("Initialisation d'un complexe par coordonnées polaires") {
+    new TestComplexes {
+      assert(PolarComplex(c1.mod, c1.arg) === Complex(1.0000000000000002, 2.0))
+    }
+  }
   test("Comparaisons de complexes") {
     new TestComplexes {
       assert(c1 > c2)

@@ -35,40 +35,28 @@ class Complex(val real: Double, val imag: Double):
    * Le module du nombre complexe
    * rappel : module(a + bi) = sqrt(a * a + b * b)
    */
-  def mod = {
-    Math.sqrt(real * real + imag * imag)
-  }
+  def mod = Math.sqrt(real * real + imag * imag)
   /**
    * L'argument d'un nombre complexe
    * rappel : argument(c = a + bi) = acos(a / module(c))
    */
-  def arg = {
-    Math.acos(real / mod)
-  }
+  def arg = Math.acos(real / mod)
   /**
    * Le complexe obtenu en additionnant "this" et "that"
    */
-  def +(that: Complex) = {
-    Complex(real+real, imag+imag)
-  }
+  def +(that: Complex) = Complex(real+real, imag+imag)
   /**
    * Le complexe obtenu en additionnant "this" et "that"
    */
-  def +(that: Double) = {
-    Complex(real + that, imag)
-  }
+  def +(that: Double) = Complex(real + that, imag)
   /**
    * Le complexe obtenu en soustrayant "that" à "this"
    */
-  def -(that: Complex) = {
-    Complex(real - that.real, imag - that.imag)
-  }
+  def -(that: Complex) = Complex(real - that.real, imag - that.imag)
   /**
    * Le complexe obtenu en soustrayant "that" à "this"
    */
-  def -(that: Double) = {
-    Complex(real - that, imag)
-  }
+  def -(that: Double) = Complex(real - that, imag)
   /**
    * Le complexe obtenu en multipliant "this" et "that"
    */
