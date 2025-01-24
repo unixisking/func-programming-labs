@@ -11,11 +11,11 @@ class MultiSetTest extends AnyFunSuite {
     val m2 = MultiSet(Map('d' -> 2, 'b' -> 3, 'e' -> 1, 'c' -> 2, 'f' -> 8))
   }
   
-  // test("Représentation textuelle d'un multiset") {
-  //   new testMultiSets {
-  //     assert(m1.toString === "MultiSet(a -> 3, b -> 2, c -> 5)")
-  //   }
-  // }
+  test("Représentation textuelle d'un multiset") {
+    new testMultiSets {
+      assert(m1.toString === "MultiSet(a -> 3, b -> 2, c -> 5)")
+    }
+  }
   // test("Egalité de deux multisets") {
   //   new testMultiSets {
   //     assert(m1.equals(MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5))))

@@ -18,9 +18,7 @@ class Complex(val real: Double, val imag: Double):
       case (x, 1) if x > 0 => s"${real} + i"
       case (x, -1) if x > 0 => s"${real} - i"
       case (x, y)  if x > 0 && y > 0 => s"${real} + ${imag}i"
-      case (x, y) if x > 0 && y < 0 => s"${real} - ${imag*(-1)}i"
-      case (x, y) if x < 0 && y < 0 => s"${real} - ${imag*(-1)}i"
-      case _ => ""
+      case (x, y) if y < 0 => s"${real} - ${imag.abs}i"
     }
   }
 
