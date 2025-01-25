@@ -16,62 +16,62 @@ class MultiSetTest extends AnyFunSuite {
       assert(m1.toString === "MultiSet(a -> 3, b -> 2, c -> 5)")
     }
   }
-  // test("Egalité de deux multisets") {
-  //   new testMultiSets {
-  //     assert(m1.equals(MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5))))
-  //   }
-  // }
-  // test("Hashcode de deux multisets égaux") {
-  //   new testMultiSets {
-  //     assert(m1.## === MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5)).##)
-  //   }
-  // }
+  test("Egalité de deux multisets") {
+    new testMultiSets {
+      assert(m1.equals(MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5))))
+    }
+  }
+  test("Hashcode de deux multisets égaux") {
+    new testMultiSets {
+      assert(m1.## === MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5)).##)
+    }
+  }
   
-  // test("Taille d'un multiset") {
-  //   new testMultiSets {
-  //     assert(m1.size === 3)
-  //   }
-  // }
-  // test("Cardinal d'un multiset") {
-  //   new testMultiSets {
-  //     assert(m2.card === 16)
-  //   }
-  // }
-  // test("Nombre d'occurrences d'un élément présent") {
-  //   new testMultiSets {
-  //     assert(m2.count('f') === 8)
-  //   }
-  // }
-  // test("nombre d'occurrences d'un élément absent") {
-  //   new testMultiSets {
-  //     assert(m1.count('d') === 0)
-  //   }
-  // }
-  // test("Présence d'un élément") {
-  //   new testMultiSets {
-  //     assert(m2.mem('b'))
-  //   }
-  // }
-  // test("Absence d'un élément") {
-  //   new testMultiSets {
-  //     assert(!m1.mem('e'))
-  //   }
-  // }
-  // test("Multiset sous-ensemble d'un autre") {
-  //   new testMultiSets {
-  //     assert(MultiSet(Map('a' -> 1, 'c' -> 2)).subsetOf(m1))
-  //   }
-  // }
-  // test("Ajout d'un élément déjà présent") {
-  //   new testMultiSets {
-  //     assert(m1.add('b', 2) === MultiSet(Map('a' -> 3, 'b' -> 4, 'c' -> 5)))
-  //   }
-  // }
-  // test("Ajout d'un élément absent") {
-  //   new testMultiSets {
-  //     assert(m1.add('d', 3) === MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5, 'd' -> 3)))
-  //   }
-  // }
+  test("Taille d'un multiset") {
+    new testMultiSets {
+      assert(m1.size === 3)
+    }
+  }
+  test("Cardinal d'un multiset") {
+    new testMultiSets {
+      assert(m2.card === 16)
+    }
+  }
+  test("Nombre d'occurrences d'un élément présent") {
+    new testMultiSets {
+      assert(m2.count('f') === 8)
+    }
+  }
+  test("nombre d'occurrences d'un élément absent") {
+    new testMultiSets {
+      assert(m1.count('d') === 0)
+    }
+  }
+  test("Présence d'un élément") {
+    new testMultiSets {
+      assert(m2.mem('b'))
+    }
+  }
+  test("Absence d'un élément") {
+    new testMultiSets {
+      assert(!m1.mem('e'))
+    }
+  }
+  test("Multiset sous-ensemble d'un autre") {
+    new testMultiSets {
+      assert(MultiSet(Map('a' -> 1, 'c' -> 2)).subsetOf(m1))
+    }
+  }
+  test("Ajout d'un élément déjà présent") {
+    new testMultiSets {
+      assert(m1.add('b', 2) === MultiSet(Map('a' -> 3, 'b' -> 4, 'c' -> 5)))
+    }
+  }
+  test("Ajout d'un élément absent") {
+    new testMultiSets {
+      assert(m1.add('d', 3) === MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5, 'd' -> 3)))
+    }
+  }
   // test("Suppression de certaines occurrences d'un élément présent") {
   //   new testMultiSets {
   //     assert(m1.remove('a', 2) === MultiSet(Map('a' -> 1, 'b' -> 2, 'c' -> 5)))
