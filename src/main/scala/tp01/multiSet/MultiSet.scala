@@ -1,4 +1,4 @@
-package multiSet
+package tp01.multiSet
 
 /**
  * Une classe modélisant les multi-ensembles.
@@ -21,28 +21,21 @@ class MultiSet[E](val elems: Map[E, Int]):
   /**
    * "e" est-il présent dans le multiset ?
    */
-  // def mem(e: E) = !elems.filter((key, value) => key.equals(e)).isEmpty
   def mem(e: E) = elems.contains(e)
   /**
    * Le nombre d'occurrences de "e" dans le multiset.
    */
-  def count(e: E): Int =
-    elems.filter((key, value) => key.equals(e))
-    .values.reduceOption(_ + _)
-    .getOrElse(0)
+  def count(e: E): Int = elems.get(e).getOrElse(0)
   /**
    * "this" est-il sous-ensemble de "that" ?
    */
   def subsetOf(that: MultiSet[E]) = {
-    if(size > that.size) {
-      false
-    }
+    if(size > that.size) false
     else {
       elems.forall {
         case (key, value) => that.elems.get(key) match
           case Some(v) => v >= value
           case None => false
-        
       }
     }
   }
@@ -62,25 +55,50 @@ class MultiSet[E](val elems: Map[E, Int]):
    * Il ne reste aucune occurrence de "e" si "n" est supérieur ou égal à
    *  this.count(e) 
    */
-  def remove(e: E, n: Int) = ???
+  def remove(e: E, n: Int) = MultiSet(
+    elems.updatedWith(e) {
+      case Some(value) if value <= n => None
+      case Some(value) => Some(value - n)
+      case None => None
+    })
   /**
    * Produit un nouveau multi-ensemble union de "this" et "that".
    */
-  def union(that: MultiSet[E]) = ???
+  def union(that: MultiSet[E]): MultiSet[E] = 
+    that.elems.foldLeft(this) { (acc, entry) =>
+      acc.add(entry._1, entry._2)
+    }
   /**
    * Produit un nouveau multi-ensemble soustraction de "that" à "this".
    */
-  def diff(that: MultiSet[E]) = ???
+  def diff(that: MultiSet[E]) =
+    that.elems.foldLeft(this) {
+      (acc, entry) => acc.remove(entry._1, entry._2)
+    }
   /**
    * Produit un nouveau multi-ensemble maximum de "this" et "that".
    * Le nombre d'occurrences d'un élément du maximum est le maximum des nombres
    *  d'occurrences de cet élément dans "this" et "that".
    */
-  def maximum(that: MultiSet[E]) = ???
+  def maximum(that: MultiSet[E]) = MultiSet(
+    elems ++ that.elems.map {
+      case (k, v) if count(k) >= v => k -> count(k)
+      case (k, v) if count(k) < v => k -> v
+    }
+  )
   /**
    * Produit un nouveau multi-ensemble intersection de "this" et "that".
    */
-  def inter(that: MultiSet[E]) = ???
+  def inter(that: MultiSet[E]) = 
+    that.elems.foldLeft(MultiSet(Map())) {
+      (acc, entry) => {
+        count(entry._1) match {
+          case x if x == 0 => acc
+          case x if x >= entry._2 => acc.add(entry._1, entry._2)
+          case x if x < that.count(entry._1) => acc.add(entry._1, x)
+        }
+      }
+    }
   /**
    * L'égalité de multi-ensembles basée sur l'égalité ensembliste.
    */

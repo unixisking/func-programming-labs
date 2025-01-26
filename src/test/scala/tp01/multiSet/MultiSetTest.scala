@@ -1,4 +1,4 @@
-package multiSet
+package tp01.multiSet
 
 import org.junit.runner.RunWith
 import org.scalatest.funsuite.AnyFunSuite
@@ -72,44 +72,44 @@ class MultiSetTest extends AnyFunSuite {
       assert(m1.add('d', 3) === MultiSet(Map('a' -> 3, 'b' -> 2, 'c' -> 5, 'd' -> 3)))
     }
   }
-  // test("Suppression de certaines occurrences d'un élément présent") {
-  //   new testMultiSets {
-  //     assert(m1.remove('a', 2) === MultiSet(Map('a' -> 1, 'b' -> 2, 'c' -> 5)))
-  //   }
-  // }
-  // test("Suppression de plus d'occurrences d'un élément que n'en contient un multiset") {
-  //   new testMultiSets {
-  //     assert(m1.remove('b', 4) === MultiSet(Map('a' -> 3, 'c' -> 5)))
-  //   }
-  // }
-  // test("Maximum de deux multisets") {
-  //   new testMultiSets {
-  //     assert(m1.maximum(m2) === MultiSet(
-  //         Map('a' -> 3, 'b' -> 3, 'c' -> 5, 'd' -> 2, 'e' -> 1, 'f' -> 8)))
-  //   }
-  // }
-  // test("Union de deux multisets") {
-  //   new testMultiSets {
-  //     assert(m1.union(m2) === MultiSet(
-  //         Map('a' -> 3, 'b' -> 5, 'c' -> 7, 'd' -> 2, 'e' -> 1, 'f' -> 8)))
-  //   }
-  // }
-  // test("Différence de deux multisets 01") {
-  //   new testMultiSets {
-  //     assert(m1.diff(m2) === MultiSet(
-  //         Map('a' -> 3, 'c' -> 3)))
-  //   }
-  // }
-  // test("Différence de deux multisets 02") {
-  //   new testMultiSets {
-  //     assert(m2.diff(m1) === MultiSet(
-  //         Map('b' -> 1, 'd' -> 2, 'e' -> 1, 'f' -> 8)))
-  //   }
-  // }
-  // test("Intersection de deux multisets") {
-  //   new testMultiSets {
-  //     assert(m1.inter(m2) === MultiSet(
-  //         Map('b' -> 2, 'c' -> 2)))
-  //   }
-  // }
+  test("Suppression de certaines occurrences d'un élément présent") {
+    new testMultiSets {
+      assert(m1.remove('a', 2) === MultiSet(Map('a' -> 1, 'b' -> 2, 'c' -> 5)))
+    }
+  }
+  test("Suppression de plus d'occurrences d'un élément que n'en contient un multiset") {
+    new testMultiSets {
+      assert(m1.remove('b', 4) === MultiSet(Map('a' -> 3, 'c' -> 5)))
+    }
+  }
+  test("Maximum de deux multisets") {
+    new testMultiSets {
+      assert(m1.maximum(m2) === MultiSet(
+          Map('a' -> 3, 'b' -> 3, 'c' -> 5, 'd' -> 2, 'e' -> 1, 'f' -> 8)))
+    }
+  }
+  test("Union de deux multisets") {
+    new testMultiSets {
+      assert(m1.union(m2) === MultiSet(
+          Map('a' -> 3, 'b' -> 5, 'c' -> 7, 'd' -> 2, 'e' -> 1, 'f' -> 8)))
+    }
+  }
+  test("Différence de deux multisets 01") {
+    new testMultiSets {
+      assert(m1.diff(m2) === MultiSet(
+          Map('a' -> 3, 'c' -> 3)))
+    }
+  }
+  test("Différence de deux multisets 02") {
+    new testMultiSets {
+      assert(m2.diff(m1) === MultiSet(
+          Map('b' -> 1, 'd' -> 2, 'e' -> 1, 'f' -> 8)))
+    }
+  }
+  test("Intersection de deux multisets") {
+    new testMultiSets {
+      assert(m1.inter(m2) === MultiSet(
+          Map('b' -> 2, 'c' -> 2)))
+    }
+  }
 }

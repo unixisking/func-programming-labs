@@ -1,4 +1,4 @@
-package complex
+package tp01.complex
 
 class PolarComplex(val mod: Double, val angle: Double):
     lazy val cartesian = Complex(

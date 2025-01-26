@@ -1,4 +1,4 @@
- package pascal
+ package tp01.pascal
 
 /**
  * Une petite application permettant d'afficher les premières lignes du triangle
