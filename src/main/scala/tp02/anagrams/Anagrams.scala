@@ -1,5 +1,7 @@
 package tp02.anagrams
 
+import tp01.multiSet.MultiSet
+
 /**
  * Un objet fournissant des outils pour construire des anagrammes de mots
  *  et de phrases.
@@ -37,12 +39,26 @@ object Anagrams {
    * Les éventuelles majuscules seront assimilées aux caractères minuscules
    *  correspondants.
    */
-  def wordOccurrences(w: Word): Occurrences = ???
-
+  def wordOccurrences(w: Word): Occurrences = {
+    val initialSet = MultiSet[Char](Map())
+    val filledSet = w.toList.foldLeft(initialSet) {
+      (acc, char) => acc.add(char.toLower, 1)
+    }
+    filledSet.elems.toList.sorted
+  }
   /** 
    * Convertit une phrase en la liste des fréquences de ses caractères.
    */
-  def sentenceOccurrences(s: Sentence): Occurrences = ???
+  def sentenceOccurrences(s: Sentence): Occurrences = {
+    val initialSet = MultiSet[Char](Map())
+    val filledSet = s.foldLeft(initialSet) {
+      (acc, word) => {
+        val tmp = wordOccurrences(word)
+        acc.union(MultiSet(tmp.toMap))
+      }
+    }
+    filledSet.elems.toList.sorted
+  }
 
   /** 
    * Une association qui fait correspondre à une liste de
@@ -57,12 +73,27 @@ object Anagrams {
    * Cela revient à regrouper les mots du dictionnaire anagrammes les
    *  uns des autres.
    */
-  lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] = ???
+  lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] = {
+    val initial = Map[Occurrences, List[Word]]()
+
+    dictionary.foldLeft(initial) {
+      (acc, word) => {
+        val word_occ = wordOccurrences(word)
+        acc.updatedWith(word_occ) {
+          case Some(value) => Some(value :+ word)
+          case None => Some(List(word))
+        }
+      }
+    }
+  }
 
   /**
    * Renvoie la liste des anagrammes de "word".
    */
-  def wordAnagrams(word: Word): List[Word] = ???
+  def wordAnagrams(word: Word): List[Word] = {
+    val word_occ = wordOccurrences(word)
+    dictionaryByOccurrences.get(word_occ).getOrElse(List())
+  }
 
   /**
    * Retourne la liste de tous les "sous-ensembles" d'une liste de fréquences.

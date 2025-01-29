@@ -26,6 +26,7 @@ class AnagramsTest extends AnyFunSuite {
   }
   test("Les mots du dictionnaire associés à des fréquences de caractères") {
     val freq = List(('o', 1), ('p', 1), ('r', 1), ('t', 1))
+    print(dictionaryByOccurrences.size)
     assert(dictionaryByOccurrences(freq).sorted ===
       List("port", "trop").sorted)
     val freq2 = List(('d', 1), ('e', 1), ('o', 1), ('r', 2))
