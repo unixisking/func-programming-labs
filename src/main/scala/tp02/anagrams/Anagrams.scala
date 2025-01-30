@@ -110,7 +110,27 @@ object Anagrams {
    *      List(('a', 2), ('b', 2))
    *    )
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = ???
+  def combinations(occurrences: Occurrences): List[Occurrences] = {
+    val result = List(List())
+
+    def processTuple(acc: List[Occurrences], char: Char, count: Int): Unit = {
+      if (count > 0) {
+        acc :+ List(char, count)
+        processTuple(acc, char, count - 1)
+      }
+    }
+
+    // for yield appel
+
+    occurrences.foldLeft(result) {
+      (acc, element) => {
+        processTuple(acc, element._1, element._2)
+
+        acc
+      }
+    }
+    result
+  }
 
   /**
    * Renvoie la liste de fréquences obtenue en retirant "y" à "x".
