@@ -94,7 +94,6 @@ object Anagrams {
     val word_occ = wordOccurrences(word)
     dictionaryByOccurrences.get(word_occ).getOrElse(List())
   }
-
   /**
    * Retourne la liste de tous les "sous-ensembles" d'une liste de fréquences.
    * Par exemple : les sous-ensembles de la liste List(('a', 2), ('b', 2)) sont :
@@ -110,26 +109,21 @@ object Anagrams {
    *      List(('a', 2), ('b', 2))
    *    )
    */
+  // type Occurrences = List[(Char, Int)]
   def combinations(occurrences: Occurrences): List[Occurrences] = {
-    val result = List(List())
 
-    def processTuple(acc: List[Occurrences], char: Char, count: Int): Unit = {
-      if (count > 0) {
-        acc :+ List(char, count)
-        processTuple(acc, char, count - 1)
-      }
+    def processTuple(result: Occurrences, char: Char, count: Int): Occurrences = {
+      if (count == 0) result
+      else processTuple(result :+ (char, count), char, count - 1) // Append and recurse
     }
 
     // for yield appel
+    val result = for occ <- occurrences 
+      sub_result = processTuple(List(), occ._1, occ._2)
+      yield sub_result
 
-    occurrences.foldLeft(result) {
-      (acc, element) => {
-        processTuple(acc, element._1, element._2)
-
-        acc
-      }
-    }
-    result
+    println(f"hello ${result}")
+    List()
   }
 
   /**
