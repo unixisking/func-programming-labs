@@ -1,7 +1,4 @@
 package tp03
-
-import tp01.pascal.Pascal.printTriangle1
-
 /**
  * Un objet permettant de coder et décoder des messages grâce à la méthode de
  *  Huffman.
