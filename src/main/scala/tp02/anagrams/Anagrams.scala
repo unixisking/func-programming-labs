@@ -122,7 +122,6 @@ object Anagrams {
       sub_result = processTuple(List(), occ._1, occ._2)
       yield sub_result
 
-    println(f"hello ${result}")
     List()
   }
 

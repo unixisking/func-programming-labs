@@ -1,5 +1,7 @@
 package tp03
 
+import tp01.pascal.Pascal.printTriangle1
+
 /**
  * Un objet permettant de coder et décoder des messages grâce à la méthode de
  *  Huffman.
@@ -85,11 +87,12 @@ object Huffman {
     def build[T<:HuffmanTree](nodes: List[T]): HuffmanTree = {
       if (nodes.length == 1) nodes.last
       else {
-        val (init, lastTwo) = nodes.splitAt(nodes.length - 2)
-        build(insert(buildTree(lastTwo.head, lastTwo.last), init))
+        val (leaves, lastTwo) = nodes.splitAt(nodes.length - 2)
+        val subTree = buildTree(lastTwo.last, lastTwo.head)
+        build((leaves :+ subTree).sortBy(x => -weight(x)))
       }
     }
-    build(leaves)
+    build(leaves.sortBy(x => -weight(x)))
   }
   
   /**
