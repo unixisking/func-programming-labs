@@ -82,11 +82,12 @@ object Huffman {
    */
   def buildHuffmanTree(leaves: List[Leaf]): HuffmanTree = {
     def build[T<:HuffmanTree](nodes: List[T]): HuffmanTree = {
-      if (nodes.length == 1) nodes.last
-      else {
-        val (leaves, lastTwo) = nodes.splitAt(nodes.length - 2)
-        val subTree = buildTree(lastTwo.last, lastTwo.head)
-        build((leaves :+ subTree).sortBy(x => -weight(x)))
+      nodes match {
+        case List(single) => single
+        case _ => 
+          val (leaves, lastTwo) = nodes.splitAt(nodes.length - 2)
+          val subTree = buildTree(lastTwo.last, lastTwo.head)
+          build((leaves :+ subTree).sortBy(x => -weight(x)))
       }
     }
     build(leaves.sortBy(x => -weight(x)))
@@ -95,14 +96,46 @@ object Huffman {
   /**
    * Décode la liste de bits "bits" avec le code "tree".
    */
-  def decode(tree: HuffmanTree, bits: List[Bit]): List[Char] = ???
-  
+  def decode(tree: HuffmanTree, bits: List[Bit]): List[Char] = {
+    def traverse(node: HuffmanTree, currentBits: List[Bit], decoded: List[Char]) : List[Char] = {
+      if (currentBits.isEmpty) {
+        node match
+          case Leaf(char, _) => decoded :+ char
+          case _ => decoded
+      }
+      else {
+        val bit = currentBits.head
+        val (_, rest) = currentBits.splitAt(1)
+        node match
+          case Leaf(char, _) => traverse(tree, currentBits, decoded :+ char)
+          case Node(left, _, _, _) if bit == 0 => traverse(left, rest, decoded)
+          case Node(_, right, _, _) if bit == 1 => traverse(right, rest, decoded)
+      }
+    }
+    traverse(tree, bits, List())
+  }
   /**
    * Renvoie la liste de bits obtenue par encodage du texte "text" avec
    *  le code de Huffman "tree".
    */
-  def encode(tree: HuffmanTree, text: List[Char]): List[Bit] = ???
-  
+  def encode(tree: HuffmanTree, text: List[Char]): List[Bit] = {
+    def dfs(node: HuffmanTree, c: Char, encoded: List[Bit]) : List[Bit] = {
+        node match {
+          case Leaf(char, _) if char == c  => encoded
+          case Node(left, right, subChars, _) if subChars.contains(c) =>
+            left match
+              case Leaf(subChar, _) if c == subChar => dfs(left, c, encoded :+ 0)
+              case Node(_, _, subChars, _) if subChars.contains(c) => dfs(left, c, encoded :+ 0)
+              case _ => 
+                right match 
+                  case Leaf(subChar, _) if c == subChar => dfs(right, c, encoded :+ 1)
+                  case Node(_, _, subChars, _) if subChars.contains(c) => dfs(right, c, encoded :+ 1)
+        }
+    }
+    text.foldLeft[List[Bit]](List()) {
+      (acc, char) => acc ++ dfs(tree, char, List())
+    }
+  }
   /**
    * Un outil plus efficace que l'arbre lui-même pour encoder un message :
    *  une table de codage qui associe son code à chaque caractère. 
