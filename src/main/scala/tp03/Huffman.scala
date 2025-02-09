@@ -160,5 +160,14 @@ object Huffman {
    *  le code de Huffman "tree" (mais en utilisant en interne la table de
    *  codage correspondante).
    */
-  def fastEncode(tree: HuffmanTree, text: List[Char]): List[Bit] = ???
+  def fastEncode(tree: HuffmanTree, text: List[Char]): List[Bit] = {
+    val codeTable = convert(tree)
+    val init : List[Bit] = List()
+    text.foldLeft(init) {
+      (acc, char) => codeTable.get(char) match
+        case None => acc
+        case Some(value) => acc ++ value
+      
+    }
+  }
 }
