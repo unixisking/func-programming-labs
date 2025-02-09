@@ -145,8 +145,16 @@ object Huffman {
   /**
    * Convertit l'arbre en une table de codage équivalente.
    */
-  def convert(tree: HuffmanTree): CodeTable = ???
-
+  def convert(tree: HuffmanTree): CodeTable = {
+    def dfs(node: HuffmanTree, codeTable: CodeTable, encoding: List[Bit]): CodeTable = {
+      node match
+        case Leaf(c, weight) => Map(c -> encoding)
+        case Node(left, right, chars, _) => {
+          codeTable ++ dfs(left, codeTable, encoding :+ 0) ++ dfs(right, codeTable, encoding :+ 1)
+        }
+    }
+    dfs(tree, Map(), List())
+  }
   /**
    * Renvoie la liste de bits obtenue par encodage du texte "text" avec
    *  le code de Huffman "tree" (mais en utilisant en interne la table de
