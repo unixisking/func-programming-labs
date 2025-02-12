@@ -167,7 +167,6 @@ object Huffman {
       (acc, char) => codeTable.get(char) match
         case None => acc
         case Some(value) => acc ++ value
-      
     }
   }
 }
