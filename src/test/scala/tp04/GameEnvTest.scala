@@ -69,26 +69,26 @@ class GameEnvTest extends AnyFunSuite {
       assert(!b2.isStanding)
     }
   }
-  // test("décalage d'un bloc sur les lignes") {
-  //   new TestGameEnv01 {
-  //     assert(b1.deltaRow(2,3) === b3)
-  //   }
-  // }
-  // test("décalage d'un bloc sur les colonnes") {
-  //   new TestGameEnv01 {
-  //     assert(b2.deltaCol(3,3) === b4)
-  //   }
-  // }
-  // test("déplacements de bloc") {
-  //   new TestGameEnv01 {
-  //     for ((b, neighbours) <- blocksAndNeighbours) {
-  //       assert(b.left === neighbours.find(_._2 == Left).get._1)
-  //       assert(b.right === neighbours.find(_._2 == Right).get._1)
-  //       assert(b.up === neighbours.find(_._2 == Up).get._1)
-  //       assert(b.down === neighbours.find(_._2 == Down).get._1)
-  //     }
-  //   }
-  // }
+  test("décalage d'un bloc sur les lignes") {
+    new TestGameEnv01 {
+      assert(b1.deltaRow(2,3) === b3)
+    }
+  }
+  test("décalage d'un bloc sur les colonnes") {
+    new TestGameEnv01 {
+      assert(b2.deltaCol(3,3) === b4)
+    }
+  }
+  test("déplacements de bloc") {
+    new TestGameEnv01 {
+      for ((b, neighbours) <- blocksAndNeighbours) {
+        assert(b.left === neighbours.find(_._2 == Left).get._1)
+        assert(b.right === neighbours.find(_._2 == Right).get._1)
+        assert(b.up === neighbours.find(_._2 == Up).get._1)
+        assert(b.down === neighbours.find(_._2 == Down).get._1)
+      }
+    }
+  }
   test("voisins d'un bloc") {
     new TestGameEnv01 {
       for ((b, neighbours) <- blocksAndNeighbours) {

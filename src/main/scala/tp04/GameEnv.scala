@@ -56,45 +56,70 @@ trait GameEnv {
    */
   case class Block(p1: Pos, p2: Pos) {
     /** Le bloc est-il à la verticale ? */
-    def isStanding: Boolean = ???
+    def isStanding: Boolean = p1 == p2
 
     /** Les deux moitiés du bloc sont-elles sur le terrain de jeu ? */
-    def isLegal: Boolean = ???
+    def isLegal: Boolean = playground(p1) && playground(p2)
+
+    require(isStanding || (p1.row == p2.row && p1.col + 1 == p2.col) || (p1.row + 1 == p2.row && p1.col == p2.col))
 
     /**
      * Retourne le bloc obtenu en décalant la première moitié de "d1" lignes
      *  et la seconde de "d2" lignes.
      */
-    def deltaRow(d1: Int, d2: Int) = ???
+    def deltaRow(d1: Int, d2: Int) = Block(Pos(p1.row + d1, p1.col), Pos(p2.row + d2, p2.col))
 
     /**
      * Retourne le bloc obtenu en décalant la première moitié de "d1" colonnes
      *  et la seconde de "d2" colonnes.
      */
-    def deltaCol(d1: Int, d2: Int) = ???
+    def deltaCol(d1: Int, d2: Int) = Block(Pos(p1.row, p1.col + d1), Pos(p2.row, p2.col + d2))
 
     /** Le bloc obtenu en se déplaçant vers la gauche. */
-    def left = ???
+    def left = (p1, p2) match
+      case Tuple2(_, _) if isStanding => deltaCol(- 2, -1)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowOne == rowTwo && colTwo == colOne + 1 => deltaCol(-1, - 2)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowTwo == rowOne + 1 && colTwo == colOne => deltaCol(-1, -1)
+      case _ => Block(p1, p2)
+      
+    
 
     /** Le bloc obtenu en se déplaçant vers la droite. */
-    def right = ???
+    def right = (p1, p2) match
+      case Tuple2(_, _) if isStanding => deltaCol(1, 2)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowOne == rowTwo && colTwo == colOne + 1 => deltaCol(2, 1)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowTwo == rowOne + 1 && colTwo == colOne => deltaCol(1, 1)
+      case _ => Block(p1, p2)
+      
+    
 
     /** Le bloc obtenu en se déplaçant vers le haut. */
-    def up = ???
+    def up = (p1, p2) match
+      case Tuple2(_, _) if isStanding => deltaRow(-2, -1)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowOne == rowTwo && colTwo == colOne + 1 => deltaRow(-1, -1)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowTwo == rowOne + 1 && colTwo == colOne => deltaRow(-1, -2)
+      case _ => Block(p1, p2)
 
     /** Le bloc obtenu en se déplaçant vers le bas. */
-    def down = ???
+    def down = (p1, p2) match
+      case Tuple2(_, _) if isStanding => deltaRow(1, 2)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowOne == rowTwo && colTwo == colOne + 1 => deltaRow(1, 1)
+      case Tuple2(Pos(rowOne, colOne), Pos(rowTwo, colTwo)) if rowTwo == rowOne + 1 && colTwo == colOne => deltaRow(2, 1)
+      case _ => Block(p1, p2)
 
     /**
      * Retourne la liste des blocs que l'on peut obtenir en un mouvement.
      * Chaque bloc est accompagné du mouvement qui a permis de l'obtenir.
      */
-    def neighbours: List[(Block, Move)] = ???
+    def neighbours: List[(Block, Move)] =
+      List((left, Left) , (right, Right), (up, Up), (down, Down))
+      
+    
 
     /**
      * Similaire à la méthode "neighbours", mais ne conserve que les blocs
      *  légaux.
      */
-    def validNeighbours: List[(Block, Move)] = ???
+    def validNeighbours: List[(Block, Move)] = neighbours.filter(neighbour => neighbour._1.isLegal)
   }
 }
