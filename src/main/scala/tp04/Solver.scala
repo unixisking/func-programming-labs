@@ -6,10 +6,10 @@ package tp04
  */
 trait Solver extends GameEnv {
   /** Le bloc au démarrage du jeu. */
-  def startBlock: Block = ???
+  def startBlock: Block = Block(Pos(1, 1), Pos(1, 1))
 
   /** Le bloc est-il à la verticale sur la position finale ? */
-  def done(b: Block): Boolean = ???
+  def done(b: Block): Boolean = b.isStanding
   
   /** Modélise l'historique des mouvements du bloc. */
   type History = List[Move]
